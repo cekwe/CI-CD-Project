@@ -1,0 +1,40 @@
+  GNU nano 7.2                                                                      app.yaml
+# app.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci-cd
+  labels:
+    app: ci-cd  # Label applied to deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ci-cd  # Pods will have this label
+  template:
+    metadata:
+      labels:
+        app: ci-cd  # Pods inherit this label
+    spec:
+      containers:
+      - name: ci-cd
+        image: clara100/abcapp:latest
+        ports:
+        - containerPort: 8081  # Match the exposed port
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: abc-nodeport-svc
+spec:
+  selector:
+    app: ci-cd # This must match the pod label
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8081
+      nodePort: 32569
+  type: NodePort
