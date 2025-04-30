@@ -7,7 +7,7 @@ pipeline {
         stage('Code Checkout') {
             steps {
                 // Checkout code
-                git url: 'https://github.com/cekwe/CI-CD-Project.git' branch: 'main'
+                git url: 'https://github.com/cekwe/CI-CD-Project.git', branch: 'main'
             }
         }
 
